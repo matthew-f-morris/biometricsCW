@@ -4,20 +4,20 @@ import cv2
 import os
 import numpy as np
 
-filepath = 'images/training/'
-save = 'cropped/training/'
-# resize = 50
+FILEPATH = 'nogreen/devtest/'
+SAVE = 'nogreen/devtest/'
+# crop = img[300:, 600:-550]
+# crop = img[320:, 700:-800]    for the side on pictures from the original images
+# crop = img[:, 80:]            further cropping
 
-for image in os.listdir(filepath):
-    img = cv2.imread(filepath + image)
+for image in os.listdir(FILEPATH):
+    fst = image.split(".")[0]
 
-    # width = int(img.shape[1] * resize / 100)
-    # height = int(img.shape[0] * resize / 100)
-    # dim = (width, height)
-    # img = cv2.resize(img, dim, interpolation = cv2.INTER_AREA)
+    if fst.endswith('e'):
+        img = cv2.imread(os.path.join(FILEPATH, image))
 
-    crop = img[300:, 600:-550]
-    h = crop.shape[0]
-    w = crop.shape[1]
+        crop = img[300:, 1030:-850]
+        cv2.imshow('canny edges', crop)
+        cv2.waitKey(0)
 
-    cv2.imwrite(os.path.join(save, image), crop)
+        cv2.imwrite(os.path.join(SAVE, image), crop)

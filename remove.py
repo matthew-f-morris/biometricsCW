@@ -30,16 +30,14 @@ def rgb_to_hsv(r, g, b):
 
 GREEN_RANGE_MIN_HSV = (100, 80, 70)
 GREEN_RANGE_MAX_HSV = (185, 255, 255)
-load = 'cropped/training/'
-save = 'nogreen/training/'
+LOAD = 'nogreen/devtest/'
+SAVE = 'nogreen/devtest/'
 
-
-def main():
-    # Load image and convert it to RGBA, so it contains alpha channel
-
-    for image in os.listdir(load):
+for image in os.listdir(LOAD):
+    if image.split(".")[0].endswith('e'):
+        print("Modifying: ", image)
         name, ext = os.path.splitext(image)
-        im = Image.open(load + image)
+        im = Image.open(LOAD + image)
         im = im.convert('RGBA')
 
         # Go through all pixels and turn each 'green' pixel to transparent
@@ -57,8 +55,4 @@ def main():
                 if min_h <= h <= max_h and min_s <= s <= max_s and min_v <= v <= max_v:
                     pix[x, y] = (0, 0, 0, 0)
 
-        im.save(os.path.join(save, name + '.png'))
-
-
-if __name__ == '__main__':
-    main()
+        im.save(os.path.join(SAVE, name + '.png'))
