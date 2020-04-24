@@ -2,14 +2,11 @@ import cv2
 import os
 import numpy as np
 
-filepath = 'nogreen/training/'
-filename = '016z050pf.jpg'
-save = 'cropped/training/'
+FILEPATH = 'nogreen/training/'
+# save = 'cropped/training/'
 
 face_cascade = cv2.CascadeClassifier(
-    'E:/Python Install/Lib/site-packages/cv2/data/haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier(
-    'E:/Python Install/Lib/site-packages/cv2/data/haarcascade_eye.xml')
+    'E:/Python Install/Lib/site-packages/cv2/data/haarcascade_profileface.xml')
 
 # img = cv2.imread(os.path.join(filepath, filename))
 # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -36,28 +33,35 @@ eye_cascade = cv2.CascadeClassifier(
 #     cv2.imshow('img', img)
 #     cv2.waitKey()
 
-for image in os.listdir(filepath):
-    img = cv2.imread(os.path.join(filepath, image))
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.1, 4)
+for image in os.listdir(FILEPATH):
 
-    i = 0
-    index = 10000000
-    while i < len(faces):
-        face = faces[i]
-        print("Face: ", face)
-        if(face[1] < index):
-            index = i
-        i = i + 1
+    fst = image.split(".")[0]
+    if fst.endswith('s'):
 
-    if(index < 1000000):
-        x, y, w, h = faces[index]
-        cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
-        roi_gray = gray[y:y+h, x:x+w]
-        roi_color = img[y:y+h, x:x+w]
+        img = cv2.imread(os.path.join(FILEPATH, image))
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = face_cascade.detectMultiScale(gray, 1.1, 4)
 
-        cv2.imshow('img', img)
-        cv2.waitKey()
+        i = 0
+        index = 10000000
 
-    else:
-        print("No Face!")
+        while i < len(faces):
+            face = faces[i]
+            print("Face: ", face)
+            if(face[1] < index):
+                index = i
+            i = i + 1
+
+        if(index < 1000000):
+            x, y, w, h = faces[index]
+            cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 2)
+            roi_gray = gray[y:y+h, x:x+w]
+            roi_color = img[y:y+h, x:x+w]
+
+            cv2.imshow('img', img)
+            cv2.waitKey()
+
+        else:
+            print("No Face!")
+            cv2.imshow('noface', img)
+            cv2.waitKey()

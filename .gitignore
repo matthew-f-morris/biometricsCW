@@ -6,3 +6,9 @@ cropped/*
 
 nogreen/*
 !nogreen/.gitkeep
+
+testrun/*
+!testrun/.gitkeep
+
+masks/*
+!masks/.gitkeep

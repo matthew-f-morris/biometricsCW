@@ -1,11 +1,18 @@
-"""
-Removes greenscreen from an image.
-Usage: python greenscreen_remove.py image.jpg
-"""
-
+import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
+import cv2
+import os
+import numpy as np
 from PIL import Image
 import sys
-import os
+
+FILEPATH = 'testrun/'
+GREEN_RANGE_MIN_HSV = (100, 80, 70)
+GREEN_RANGE_MAX_HSV = (185, 255, 255)
+
+# crop = img[300:, 600:-550]
+# crop = img[320:, 700:-800]    for the side on pictures from the original images
+# crop = img[:, 80:]            further cropping
 
 
 def rgb_to_hsv(r, g, b):
@@ -28,21 +35,19 @@ def rgb_to_hsv(r, g, b):
     return h, s, v
 
 
-GREEN_RANGE_MIN_HSV = (100, 80, 70)
-GREEN_RANGE_MAX_HSV = (185, 255, 255)
-LOAD = 'testrun/'
-SAVE = 'testrun/'
+for image in os.listdir(FILEPATH):
 
-for image in os.listdir(LOAD):
-  # if image.split(".")[0].endswith('o'):
+    img = cv2.imread(os.path.join(FILEPATH, image))
     print("Modifying: ", image)
-    name, ext = os.path.splitext(image)
-    im = Image.open(LOAD + image)
-    im = im.convert('RGBA')
 
-    # Go through all pixels and turn each 'green' pixel to transparent
-    pix = im.load()
-    width, height = im.size
+    img = img[300:, 1030:-850]
+    cv2.imshow('img', img)
+    cv2.waitKey(0)
+
+    img = img.convert('RGBA')
+
+    pix = img.load()
+    width, height = img.size
     for x in range(width):
         for y in range(height):
             r, g, b, a = pix[x, y]
@@ -53,6 +58,12 @@ for image in os.listdir(LOAD):
             min_h, min_s, min_v = GREEN_RANGE_MIN_HSV
             max_h, max_s, max_v = GREEN_RANGE_MAX_HSV
             if min_h <= h <= max_h and min_s <= s <= max_s and min_v <= v <= max_v:
-                pix[x, y] = (0, 0, 0, 255)
+                pix[x, y] = (0, 0, 0, 1)
 
-    im.save(os.path.join(SAVE, name + '.png'), 'PNG')
+    cv2.imshow('img', img)
+    cv2.waitKey(0)
+
+    img[img > 0] = 255
+
+    cv2.imshow('img', img)
+    cv2.waitKey(0)

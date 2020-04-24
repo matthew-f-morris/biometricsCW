@@ -1,0 +1,4 @@
+1). CROP
+2). Remove Green
+3). Create White Masks
+4). Histeq
