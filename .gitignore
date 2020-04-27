@@ -12,3 +12,7 @@ testrun/*
 
 masks/*
 !masks/.gitkeep
+
+*.caffemodel
+
+proto.txt
