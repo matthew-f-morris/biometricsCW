@@ -9,9 +9,6 @@ FILEPATH = 'cropped/training/'
 face_cascade = cv2.CascadeClassifier(
     'E:/Python Install/Lib/site-packages/cv2/data/haarcascade_frontalface_default.xml')
 
-prototxt = 'E:\Biometrics\proto.txt'
-model = 'E:\Biometrics\res10_300x300_ssd_iter_140000.caffemodel'
-
 # img = cv2.imread(os.path.join(filepath, filename))
 # gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # faces = face_cascade.detectMultiScale(gray, 1.1, 4)

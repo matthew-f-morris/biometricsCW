@@ -1,0 +1,9 @@
+https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_gabor.html
+
+https://gist.github.com/odebeir/5237529
+
+https://arxiv.org/ftp/arxiv/papers/1503/1503.03741.pdf
+
+https://cvtuts.wordpress.com/
+
+PCA!
